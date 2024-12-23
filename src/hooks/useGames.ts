@@ -1,12 +1,28 @@
 import { useMutation, useQuery, useQueryClient } from "react-query"
-import { getGameById } from "../services/gameService"
+import { getAvailableGames, getGameById } from "../services/gameService"
 import Turn from "../models/Turn"
 import { takeTurn } from "../services/turnService"
+
+
+export function useAvailableGames() {
+    const {isLoading, isError, data: games} = useQuery({
+        queryKey: ['games'],
+        queryFn: () => getAvailableGames()
+    })
+
+    return {
+        isLoading,
+        isError,
+        games
+    }
+}
+
 
 export function useGame( id: string) {
     const {isLoading, isError, data: game} = useQuery({
         queryKey: ['games',id],
-        queryFn: () => getGameById(id)
+        queryFn: () => getGameById(id), 
+        refetchInterval: 500
     })
 
     return {

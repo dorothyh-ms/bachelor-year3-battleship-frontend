@@ -3,6 +3,7 @@ import AuthContext from './AuthContext'
 import {addAccessTokenToAuthHeader, removeAccessTokenFromAuthHeader} from '../services/auth'
 import {isExpired} from 'react-jwt'
 import Keycloak from 'keycloak-js'
+import User from '../models/User'
 
 interface IWithChildren {
     children: ReactNode
@@ -16,15 +17,19 @@ const keycloakConfig = {
 const keycloak: Keycloak = new Keycloak(keycloakConfig)
 
 export default function AuthContextProvider({children}: IWithChildren) {
-    const [user, setLoggedInUser] = useState<string | undefined>(undefined)
+    const [user, setLoggedInUser] = useState<User | undefined>(undefined)
 
     useEffect(() => {
         keycloak.init({onLoad: 'login-required'})
     }, [])
 
     keycloak.onAuthSuccess = () => {
-        addAccessTokenToAuthHeader(keycloak.token)
-        setLoggedInUser(keycloak.idTokenParsed?.given_name)
+        addAccessTokenToAuthHeader(keycloak.token);
+        console.log("keycloak.idTokenParsed", keycloak.idTokenParsed)
+        keycloak.idTokenParsed && keycloak.idTokenParsed.sub && setLoggedInUser({
+            id: keycloak.idTokenParsed.sub,
+            username: keycloak.idTokenParsed.given_name
+        })
     }
 
     keycloak.onAuthLogout = () => {
