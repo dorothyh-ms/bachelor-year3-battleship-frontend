@@ -1,8 +1,9 @@
 import { createContext } from 'react'
+import User from '../models/User'
 
 export interface ISecurityContext {
     isAuthenticated: () => boolean
-    user: string | undefined
+    user: User | undefined
     login: () => void
     logout: () => void
 }
