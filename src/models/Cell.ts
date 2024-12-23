@@ -3,7 +3,9 @@ import Coordinate from "./Coordinate";
 export type Cell = {
     id: string;
     coordinates: Coordinate
-    hitStatus: HitStatus
+    hitStatus: HitStatus, 
+    occupiedStatus: OccupiedStatus
+    shipId: string;
 }
 
 export enum HitStatus {
@@ -12,3 +14,8 @@ export enum HitStatus {
     MISS
 }
 
+
+export enum OccupiedStatus {
+    EMPTY,
+    OCCUPIED
+}

@@ -8,6 +8,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import AuthContextProvider from './context/AuthContextProvider';
 import {CssBaseline, ThemeProvider} from "@mui/material";
 import { RequireAuth } from './components/RequireAuth';
+import AvailableGamesPage from './pages/AvailableGamesPage';
 
 const queryClient = new QueryClient();
 
@@ -16,6 +17,7 @@ const router = createBrowserRouter(
 
       <Route element={<RequireAuth />}>
           <Route element={<MainLayout/>}>
+                <Route index element={<AvailableGamesPage />}/>
               <Route path="/:gameId" element={<GamePage/>}/>
           </Route>
       </Route>

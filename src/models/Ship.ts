@@ -3,9 +3,9 @@ import Coordinate from "./Coordinate";
 export type Ship = {
 id: string;
 type: ShipType;
-status: ShipStatus;
+status: string;
 numHits: number;
-coordinates : Coordinate[]
+
 }
 
 export enum ShipType {
