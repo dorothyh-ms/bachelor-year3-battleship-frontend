@@ -7,7 +7,6 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import AuthContextProvider from './context/AuthContextProvider';
 import {CssBaseline, ThemeProvider} from "@mui/material";
 import { RequireAuth } from './components/RequireAuth';
-import AvailableGamesPage from './pages/AvailableGamesPage';
 import HelloWorldPage from './pages/HelloWorldPage';
 
 const queryClient = new QueryClient();
