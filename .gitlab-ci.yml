@@ -27,6 +27,8 @@ build_project:
   stage: build
   image: node:18
   script:
+    - echo "Keycloak URL $VITE_KC_URL"
+    - echo "API URL $API_URL"
     - echo "VITE_KC_URL=$KC_URL" >> .env
     - echo "VITE_KC_REALM=$KC_REALM" >> .env
     - echo "VITE_KC_CLIENT_ID=$KC_CLIENT_ID" >> .env
@@ -47,9 +49,13 @@ build_and_push_docker_image:
   script:
     - echo "Successfully built image $DOCKER_IMAGE"
     - echo "$IMAGE_PASSWORD" | docker login acrbattleship.azurecr.io --username "$IMAGE_USERNAME" --password-stdin
-    - docker build -t $DOCKER_IMAGE:latest . || exit 1
+    - docker build --build-arg VITE_KC_URL=$KC_URL \
+             --build-arg VITE_KC_REALM=$KC_REALM \
+             --build-arg VITE_KC_CLIENT_ID=$KC_CLIENT_ID \
+             --build-arg VITE_API_URL=$API_URL \
+             -t $DOCKER_IMAGE:latest .
     - echo "Successfully built image $DOCKER_IMAGE"
-    - GIT_COMMIT_TAG=$(git rev-parse --short HEAD)
+    - GIT_COMMIT_TAG=${CI_COMMIT_SHORT_SHA}
     - echo "Pushing to ACR image $DOCKER_IMAGE with tag $GIT_COMMIT_TAG"
     - docker tag $DOCKER_IMAGE:latest acrbattleship.azurecr.io/$DOCKER_IMAGE:$GIT_COMMIT_TAG || exit 1
     - docker tag $DOCKER_IMAGE:latest acrbattleship.azurecr.io/$DOCKER_IMAGE:latest || exit 1
