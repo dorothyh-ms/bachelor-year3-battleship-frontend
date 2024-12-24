@@ -8,6 +8,7 @@ import BoardGrid from "./BoardGrid";
 import { blue, grey, red } from "@mui/material/colors";
 import ClearIcon from '@mui/icons-material/Clear';
 interface OpponentBoardContainerProps {
+  gameId: string;
   board: Board;
   canTakeTurn: boolean;
 
@@ -16,15 +17,15 @@ interface OpponentBoardContainerProps {
 const OpponentBoardContainer= (props: OpponentBoardContainerProps) => {
 
   const {takeTurn} = useTakeTurn();
-  const handleClick=(x: number, y: number) =>{
-    takeTurn({
-      gameId: "b5e26938-7d4f-445d-8c61-a3335b1d100a", 
-      attackX: x,
-      attackY: y
-    })
-   
-  }
-    const {board, canTakeTurn}  = props;
+  
+    const {board, canTakeTurn, gameId}  = props;
+    const handleClick=(x: number, y: number) =>{
+      takeTurn({
+        gameId: gameId, 
+        attackX: x,
+        attackY: y
+      })
+    }
 
     const renderCell = (cell : Cell) => {
       let color: string;

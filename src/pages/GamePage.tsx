@@ -21,7 +21,8 @@ const GamePage = () => {
             </Stack>
             <Stack direction={"column"}>
                 <Typography variant='h6'>{canTakeTurn ? "Attack your opponent" : "Waiting for opponent..."}</Typography>
-                <OpponentBoardContainer 
+                <OpponentBoardContainer
+                gameId={gameId} 
                     canTakeTurn={canTakeTurn} 
                     board={game.opponentBoard} />
             </Stack>
