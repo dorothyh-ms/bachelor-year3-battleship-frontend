@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import BoardGrid from "./BoardGrid";
-import { Cell, HitStatus } from "../models/Cell";
+import { Cell } from "../models/Cell";
 
 import PlayerBoard from "../models/PlayerBoard";
 import { GRID_CELL_HEIGHT } from "../constants/gridCellHeight";
@@ -18,10 +18,10 @@ const PlayerBoardContainer = ({ board }: PlayerBoardContainerProps) => {
 
     let color: string;
     switch (cell.hitStatus) {
-        case HitStatus.HIT:
+        case "HIT":
             color = red[600];
             break;
-        case HitStatus.MISS:
+        case "MISS":
             color = blue[900];
             break;
         default:
@@ -30,9 +30,7 @@ const PlayerBoardContainer = ({ board }: PlayerBoardContainerProps) => {
     const ship = board.ships.find(ship =>
         ship.id === cell.shipId
       );
-    if  (ship ){
-        console.log("ship", ship);
-    }
+
 
     let borderColor;
 
@@ -73,7 +71,7 @@ cellColor = (ship && (ship.status == "SUNK")) ? red[600] : "transparent";
             border: `2px solid ${borderColor}`,
             borderRadius: "4px"}}>
          {
-            (cell.hitStatus == HitStatus.HIT) || (cell.hitStatus == HitStatus.MISS) ? <ClearIcon sx={{color: color}}/> : <Box sx={{width: 12, height: 12, borderRadius: "999px",  backgroundColor: color}} />
+            (cell.hitStatus == "HIT") || (cell.hitStatus == "MISS") ? <ClearIcon sx={{color: color}}/> : <Box sx={{width: 12, height: 12, borderRadius: "999px",  backgroundColor: color}} />
             }
         </Box>
     </Box>

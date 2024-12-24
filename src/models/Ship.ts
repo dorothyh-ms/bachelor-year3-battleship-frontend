@@ -1,11 +1,10 @@
-import Coordinate from "./Coordinate";
+
 
 export type Ship = {
 id: string;
 type: ShipType;
 status: string;
 numHits: number;
-
 }
 
 export enum ShipType {

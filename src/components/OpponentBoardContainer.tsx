@@ -1,6 +1,6 @@
 import { alpha, Box, Button, } from "@mui/material";
 
-import { Cell, HitStatus } from "../models/Cell";
+import { Cell } from "../models/Cell";
 import Board from "../models/Board";
 
 import { useTakeTurn } from "../hooks/useGames";
@@ -30,10 +30,10 @@ const OpponentBoardContainer= (props: OpponentBoardContainerProps) => {
     const renderCell = (cell : Cell) => {
       let color: string;
       switch (cell.hitStatus) {
-          case HitStatus.HIT:
+          case "HIT":
               color = red[600];
               break;
-          case HitStatus.MISS:
+          case "MISS":
                 color = blue[900];
               break;
           default:
@@ -60,10 +60,10 @@ const OpponentBoardContainer= (props: OpponentBoardContainerProps) => {
                             handleClick(cell.coordinates.xCoordinate, cell.coordinates.yCoordinate)
                         }
                     }
-                    disabled={!canTakeTurn || cell.hitStatus.valueOf() !== HitStatus.UNHIT}
+                    disabled={!canTakeTurn || cell.hitStatus != "UNHIT"}
                   >
                     {
-                    (cell.hitStatus == HitStatus.HIT) || (cell.hitStatus == HitStatus.MISS) ? <ClearIcon sx={{color: color}}/> : <Box 
+                    (cell.hitStatus == "HIT") || (cell.hitStatus == "MISS") ? <ClearIcon sx={{color: color}}/> : <Box 
                     sx={{width: tickSize, height: tickSize, borderRadius: "999px",  backgroundColor: alpha(color, canTakeTurn ? 1 : 0.5)}} 
                     />  
                 }
