@@ -16,7 +16,7 @@ cache:
 
 install_dependencies:
   stage: install
-  image: node:14
+  image: node:18
   script:
     - npm ci
   artifacts:
@@ -25,7 +25,7 @@ install_dependencies:
 
 build_project:
   stage: build
-  image: node:14
+  image: node:18
   script:
     - echo "VITE_KC_URL=$KC_URL" >> .env
     - echo "VITE_KC_REALM=$KC_REALM" >> .env
