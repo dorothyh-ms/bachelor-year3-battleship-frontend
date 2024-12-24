@@ -1,0 +1,55 @@
+stages:
+  - install
+  - build
+  - dockerize
+
+variables:
+  NODE_ENV: production
+  DOCKER_IMAGE: acrbattleship/battleshipfrontend
+
+before_script:
+  - echo "Starting pipeline..."
+
+cache:
+  paths:
+    - node_modules/
+
+install_dependencies:
+  stage: install
+  script:
+    - npm ci
+  artifacts:
+    paths:
+      - node_modules/
+
+build_project:
+  stage: build
+  script:
+
+    - echo "VITE_KC_URL=$KC_URL" >> .env
+    - echo "VITE_KC_REALM=$KC_REALM" >> .env
+    - echo "VITE_KC_CLIENT_ID=$KC_CLIENT_ID" >> .env
+    - echo "VITE_API_URL=$API_URL" >> .env
+
+    - npm run build
+  artifacts:
+    paths:
+      - dist/
+
+build_and_push_docker_image:
+  stage: dockerize
+  image: docker:20.10
+  services:
+    - docker:20.10-dind
+  variables:
+    DOCKER_DRIVER: overlay2
+  script:
+    - echo "$IMAGE_PASSWORD" | docker login acrbattleship.azurecr.io --username "$IMAGE_USERNAME" --password-stdin
+    - docker build -t $DOCKER_IMAGE:latest .
+    - GIT_COMMIT_TAG=$(git rev-parse --short HEAD)
+    - docker tag $DOCKER_IMAGE:latest acrbattleship.azurecr.io/$DOCKER_IMAGE:$GIT_COMMIT_TAG
+    - docker tag $DOCKER_IMAGE:latest acrbattleship.azurecr.io/$DOCKER_IMAGE:latest
+    - docker push acrbattleship.azurecr.io/$DOCKER_IMAGE:$GIT_COMMIT_TAG
+    - docker push acrbattleship.azurecr.io/$DOCKER_IMAGE:latest
+  only:
+    - main
