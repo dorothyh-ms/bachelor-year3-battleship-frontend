@@ -1,12 +1,12 @@
-import { alpha, Box } from "@mui/material";
+import { Box } from "@mui/material";
 import BoardGrid from "./BoardGrid";
 import { Cell, HitStatus } from "../models/Cell";
-import Board from "../models/Board";
+
 import PlayerBoard from "../models/PlayerBoard";
 import { GRID_CELL_HEIGHT } from "../constants/gridCellHeight";
-import { blue, grey, purple, red } from "@mui/material/colors";
+import { blue, grey, red } from "@mui/material/colors";
 import ClearIcon from '@mui/icons-material/Clear';
-import { ShipStatus } from "../models/Ship";
+
 
 interface PlayerBoardContainerProps {
   board: PlayerBoard;

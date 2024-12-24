@@ -1,4 +1,4 @@
-import { alpha, Box, Button, Grid, Grid2, Typography } from "@mui/material";
+import { alpha, Box, Button, } from "@mui/material";
 
 import { Cell, HitStatus } from "../models/Cell";
 import Board from "../models/Board";

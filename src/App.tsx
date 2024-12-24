@@ -1,5 +1,4 @@
 
-import './App.css'
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom';
 import GamePage from './pages/GamePage';
 import MainLayout from './layouts/MainLayout';
