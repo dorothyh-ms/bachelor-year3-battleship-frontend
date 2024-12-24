@@ -45,6 +45,7 @@ build_and_push_docker_image:
   variables:
     DOCKER_DRIVER: overlay2
   script:
+    - echo "Successfully built image $DOCKER_IMAGE"
     - echo "$IMAGE_PASSWORD" | docker login acrbattleship.azurecr.io --username "$IMAGE_USERNAME" --password-stdin
     - docker build -t $DOCKER_IMAGE:latest . || exit 1
     - echo "Successfully built image $DOCKER_IMAGE"
@@ -57,5 +58,3 @@ build_and_push_docker_image:
     - echo "Successfully pushed image $DOCKER_IMAGE with tag $GIT_COMMIT_TAG"
     - docker push acrbattleship.azurecr.io/$DOCKER_IMAGE:latest
     - echo "Successfully pushed image $DOCKER_IMAGE with tag latest"
-  only:
-    - main
