@@ -1,7 +1,7 @@
 stages:
   - install
   - build
-  - dockerize
+  - image
 
 variables:
   NODE_ENV: production
@@ -16,6 +16,7 @@ cache:
 
 install_dependencies:
   stage: install
+  image: node:14
   script:
     - npm ci
   artifacts:
@@ -24,6 +25,7 @@ install_dependencies:
 
 build_project:
   stage: build
+  image: node:14
   script:
 
     - echo "VITE_KC_URL=$KC_URL" >> .env
@@ -37,7 +39,7 @@ build_project:
       - dist/
 
 build_and_push_docker_image:
-  stage: dockerize
+  stage: image
   image: docker:20.10
   services:
     - docker:20.10-dind
