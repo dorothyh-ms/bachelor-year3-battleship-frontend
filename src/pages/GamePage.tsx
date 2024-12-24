@@ -26,7 +26,11 @@ const GamePage = () => {
                         canTakeTurn={canTakeTurn}
                         board={game.opponentBoard} />
                 </Stack>}
+                
             </>
+            }
+            {
+                !gameId && <Typography>Navigate to the BanditGames platform to start a game.</Typography>
             }
 
         </Stack>
