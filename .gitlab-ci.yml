@@ -47,10 +47,9 @@ build_and_push_docker_image:
   variables:
     DOCKER_DRIVER: overlay2
   script:
-    - echo "NGINX configuration file"
-    - cat nginx.conf
+    - echo ""
     - echo "$IMAGE_PASSWORD" | docker login acrbattleship.azurecr.io --username "$IMAGE_USERNAME" --password-stdin
-    - docker build -t $DOCKER_IMAGE:latest --build-arg VITE_KC_URL=$KC_URL --build-arg VITE_KC_REALM=$KC_REALM --build-arg VITE_KC_CLIENT_ID=$KC_CLIENT_ID --build-arg VITE_API_URL=$API_URL .
+    - docker build --no-cache -t $DOCKER_IMAGE:latest --build-arg VITE_KC_URL=$KC_URL --build-arg VITE_KC_REALM=$KC_REALM --build-arg VITE_KC_CLIENT_ID=$KC_CLIENT_ID --build-arg VITE_API_URL=$API_URL .
     - echo "Successfully built image $DOCKER_IMAGE"
     - GIT_COMMIT_TAG=${CI_COMMIT_SHORT_SHA}
     - echo "Pushing to ACR image $DOCKER_IMAGE with tag $GIT_COMMIT_TAG"
