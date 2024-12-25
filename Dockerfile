@@ -38,7 +38,7 @@ RUN rm -rf ./*
 # Copy built application files from the builder stage
 COPY --from=builder /app/dist .
 
-COPY nginx.conf /etc/nginx/nginx.conf
+COPY nginx.conf /etc/nginx/conf.d/nginx.conf
 
 
 # Expose port 80 for the application
