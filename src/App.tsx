@@ -1,5 +1,4 @@
 
-import './App.css'
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom';
 import GamePage from './pages/GamePage';
 import MainLayout from './layouts/MainLayout';
@@ -8,7 +7,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import AuthContextProvider from './context/AuthContextProvider';
 import {CssBaseline, ThemeProvider} from "@mui/material";
 import { RequireAuth } from './components/RequireAuth';
-import AvailableGamesPage from './pages/AvailableGamesPage';
+import HelloWorldPage from './pages/HelloWorldPage';
 
 const queryClient = new QueryClient();
 
@@ -17,7 +16,7 @@ const router = createBrowserRouter(
 
       <Route element={<RequireAuth />}>
           <Route element={<MainLayout/>}>
-                <Route index element={<AvailableGamesPage />}/>
+                <Route index element={<HelloWorldPage />}/>
               <Route path="/:gameId" element={<GamePage/>}/>
           </Route>
       </Route>
