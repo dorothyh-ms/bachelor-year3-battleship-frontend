@@ -1,9 +1,8 @@
 import { Box, Grid } from "@mui/material";
-import GridCell from "./GridCell";
+
 import Board from "../models/Board";
 import { Cell } from "../models/Cell";
 import { GRID_CELL_HEIGHT } from "../constants/gridCellHeight";
-import { Ship } from "../models/Ship";
 
 interface BoardGridProps {
   board: Board;

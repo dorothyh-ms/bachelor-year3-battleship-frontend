@@ -1,5 +1,5 @@
 import { alpha, Box, Button } from "@mui/material";
-import { Cell, HitStatus } from "../models/Cell"
+import { Cell } from "../models/Cell"
 import { grey, red } from "@mui/material/colors";
 import ClearIcon from '@mui/icons-material/Clear';
 
@@ -14,10 +14,10 @@ const OpponentGridCell = (props: GridCellProps) => {
     let color: string;
 
     switch (cell.hitStatus) {
-        case HitStatus.HIT:
+        case "HIT":
             color = red[600];
             break;
-        case HitStatus.MISS:
+        case "MISS":
             color = grey[900];
             break;
         default:
@@ -46,10 +46,10 @@ const OpponentGridCell = (props: GridCellProps) => {
 
                         }
                     }
-                    disabled={!canTakeTurn || cell.hitStatus.valueOf() !== HitStatus.UNHIT}
+                    disabled={!canTakeTurn || cell.hitStatus != "UNHIT"}
                   >
                     {
-                    cell.hitStatus == HitStatus.HIT ? <ClearIcon sx={{color: color}}/> : <Box 
+                    cell.hitStatus == "HIT" ? <ClearIcon sx={{color: color}}/> : <Box 
                     sx={{width: tickSize, height: tickSize, borderRadius: "999px",  backgroundColor: alpha(color, canTakeTurn ? 1 : 0.5)}} 
                     />  
                 }
