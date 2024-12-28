@@ -5,7 +5,7 @@ import MainLayout from './layouts/MainLayout';
 import theme from './theme';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import AuthContextProvider from './context/AuthContextProvider';
-import {CssBaseline, ThemeProvider} from "@mui/material";
+import { CssBaseline, ThemeProvider } from "@mui/material";
 import { RequireAuth } from './components/RequireAuth';
 import HelloWorldPage from './pages/HelloWorldPage';
 
@@ -14,12 +14,12 @@ const queryClient = new QueryClient();
 const router = createBrowserRouter(
   createRoutesFromElements(
 
-      <Route element={<RequireAuth />}>
-          <Route element={<MainLayout/>}>
-                <Route index element={<HelloWorldPage />}/>
-              <Route path="/:gameId" element={<GamePage/>}/>
-          </Route>
+    <Route element={<RequireAuth />}>
+      <Route element={<MainLayout />}>
+        <Route index element={<HelloWorldPage />} />
+        <Route path="/:gameId" element={<GamePage />} />
       </Route>
+    </Route>
 
 
   )
@@ -30,13 +30,13 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-    <AuthContextProvider>
+      <AuthContextProvider>
         <ThemeProvider theme={theme}>
-            <CssBaseline/>
-            <RouterProvider router={router}/>
+          <CssBaseline />
+          <RouterProvider router={router} />
         </ThemeProvider>
-    </AuthContextProvider>
-</QueryClientProvider>
+      </AuthContextProvider>
+    </QueryClientProvider>
   )
 }
 

@@ -1,11 +1,21 @@
 stages:
   - install
   - build
-  - image
+  - deploy
 
 variables:
   NODE_ENV: production
-  DOCKER_IMAGE: acrbattleship/battleshipfrontend
+  API_TOKEN: $DEPLOYMENT_TOKEN
+  APP_PATH: '$CI_PROJECT_DIR'
+  OUTPUT_PATH: '$CI_PROJECT_DIR/dist'
+  APP_BUILD_COMMAND: |
+    ls . && \
+    echo "Generating .env file with CI/CD environment variables..." && \
+    echo "VITE_KC_URL=$KC_URL" > .env && \
+    echo "VITE_KC_REALM=$KC_REALM" >> .env && \
+    echo "VITE_KC_CLIENT_ID=$KC_CLIENT_ID" >> .env && \
+    echo "VITE_API_URL=$API_URL" >> .env && \
+    npm run build
 
 before_script:
   - echo "Starting pipeline..."
@@ -27,36 +37,26 @@ build_project:
   stage: build
   image: node:18
   script:
-    - echo "Keycloak URL $VITE_KC_URL"
-    - echo "API URL $API_URL"
-    - echo "VITE_KC_URL=$KC_URL" >> .env
+    - echo "Keycloak URL $KC_URL"
+    - echo "API_URL $API_URL"
+    - echo "VITE_KC_URL=$KC_URL" > .env
     - echo "VITE_KC_REALM=$KC_REALM" >> .env
     - echo "VITE_KC_CLIENT_ID=$KC_CLIENT_ID" >> .env
     - echo "VITE_API_URL=$API_URL" >> .env
-
+    - cat .env
     - npm run build
   artifacts:
     paths:
       - dist/
 
-build_and_push_docker_image:
-  stage: image
-  image: docker:20.10
-  services:
-    - docker:20.10-dind
-  variables:
-    DOCKER_DRIVER: overlay2
+
+
+deploy:
+  stage: deploy
+  dependencies:
+    - build_project
+  image: registry.gitlab.com/static-web-apps/azure-static-web-apps-deploy
   script:
-    - echo ""
-    - echo "$IMAGE_PASSWORD" | docker login acrbattleship.azurecr.io --username "$IMAGE_USERNAME" --password-stdin
-    - docker build --no-cache -t $DOCKER_IMAGE:latest --build-arg VITE_KC_URL=$KC_URL --build-arg VITE_KC_REALM=$KC_REALM --build-arg VITE_KC_CLIENT_ID=$KC_CLIENT_ID --build-arg VITE_API_URL=$API_URL .
-    - echo "Successfully built image $DOCKER_IMAGE"
-    - GIT_COMMIT_TAG=${CI_COMMIT_SHORT_SHA}
-    - echo "Pushing to ACR image $DOCKER_IMAGE with tag $GIT_COMMIT_TAG"
-    - docker tag $DOCKER_IMAGE:latest acrbattleship.azurecr.io/$DOCKER_IMAGE:$GIT_COMMIT_TAG || exit 1
-    - docker tag $DOCKER_IMAGE:latest acrbattleship.azurecr.io/$DOCKER_IMAGE:latest || exit 1
-    - echo "Successfully tagged image $DOCKER_IMAGE with tags $GIT_COMMIT_TAG and latest"
-    - docker push acrbattleship.azurecr.io/$DOCKER_IMAGE:$GIT_COMMIT_TAG || 
-    - echo "Successfully pushed image $DOCKER_IMAGE with tag $GIT_COMMIT_TAG"
-    - docker push acrbattleship.azurecr.io/$DOCKER_IMAGE:latest
-    - echo "Successfully pushed image $DOCKER_IMAGE with tag latest"
+    - echo 'Finished deployment'
+  # only:
+  #   - main
