@@ -1,15 +1,10 @@
-import { Box, Stack } from "@mui/material";
-import { useAvailableGames } from "../hooks/useGames";
+import { Stack } from "@mui/material";
 
 const AvailableGamesPage = () => {
-    const {games } = useAvailableGames();
+    
     return (
         <Stack direction="row">
-            {
-                games && <Box>
-                   
-                </Box>
-            }
+           Here you will see your games
         </Stack>
 
     );

@@ -8,6 +8,7 @@ import AuthContextProvider from './context/AuthContextProvider';
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { RequireAuth } from './components/RequireAuth';
 import HelloWorldPage from './pages/HelloWorldPage';
+import AvailableGamesPage from './pages/AvailableGamesPage';
 
 const queryClient = new QueryClient();
 
@@ -17,6 +18,7 @@ const router = createBrowserRouter(
     <Route element={<RequireAuth />}>
       <Route element={<MainLayout />}>
         <Route index element={<HelloWorldPage />} />
+        <Route path="/games" element={<AvailableGamesPage />} />
         <Route path="/:gameId" element={<GamePage />} />
       </Route>
     </Route>
