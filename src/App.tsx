@@ -19,7 +19,7 @@ const router = createBrowserRouter(
       <Route element={<MainLayout />}>
         <Route index element={<HelloWorldPage />} />
         <Route path="/games" element={<AvailableGamesPage />} />
-        <Route path="/:gameId" element={<GamePage />} />
+        <Route path="/games/:gameId" element={<GamePage />} />
       </Route>
     </Route>
 
@@ -27,19 +27,18 @@ const router = createBrowserRouter(
   )
 );
 
-function App() {
+const App = () => {
+    return (
+        <QueryClientProvider client={queryClient}>
+            <AuthContextProvider>
+                <ThemeProvider theme={theme}>
+                   <CssBaseline />
+                   <RouterProvider router={router} />
+                </ThemeProvider>
+            </AuthContextProvider>
+        </QueryClientProvider>
+ 
+    );
+};
 
-
-  return (
-    <QueryClientProvider client={queryClient}>
-      <AuthContextProvider>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <RouterProvider router={router} />
-        </ThemeProvider>
-      </AuthContextProvider>
-    </QueryClientProvider>
-  )
-}
-
-export default App
+export default App;
