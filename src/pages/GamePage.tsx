@@ -15,16 +15,23 @@ const GamePage = () => {
     return (
         <Stack direction={{ xs: "column", xl: "row" }} gap={10}>
             {game && <>
-                <Stack direction={"column"}>
-                    <Typography variant='h6'>Your board</Typography>
-                    <PlayerBoardContainer board={game.playerBoard} />
+                <Stack direction={"column"} gap={2} sx={{alignItems: "center"}}>
+                    <Typography variant='h6'>{game.over ? game.playerBoard.defeated ? "You lost" : "You won" : "Your board"}</Typography>
+                    <PlayerBoardContainer 
+                    gameOver={game.over}
+                    board={game.playerBoard}
+                     />
                 </Stack>
-                {gameId && <Stack direction={"column"}>
-                    <Typography variant='h6'>{canTakeTurn ? "Attack your opponent" : "Waiting for opponent..."}</Typography>
+                {gameId && <Stack direction={"column"} gap={2} sx={{alignItems: "center"}}>
+                    {
+                        <Typography variant='h6'>{game.over ? game.opponentBoard.defeated ? "Opponent lost" : "Opponent won" : canTakeTurn ? "Attack your opponent": "Waiting for opponent to take their turn..."}</Typography>
+                    }
                     <OpponentBoardContainer
                         gameId={gameId}
-                        canTakeTurn={canTakeTurn}
-                        board={game.opponentBoard} />
+                        canTakeTurn={canTakeTurn && !game.over}
+                        board={game.opponentBoard}
+                        gameOver={game.over}
+                         />
                 </Stack>}
                 
             </>

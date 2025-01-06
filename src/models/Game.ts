@@ -7,7 +7,7 @@ type Game = {
     currentPlayerId: string;
     opponentBoard: Board;
     playerBoard: PlayerBoard;
-    isOver: boolean;
+    over: boolean;
     startDateTime: string;
 }
 
