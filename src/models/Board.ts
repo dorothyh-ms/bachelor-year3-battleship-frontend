@@ -1,7 +1,7 @@
 import { Cell } from "./Cell";
 
 interface Board {
-    isDefeated: boolean;
+    defeated: boolean;
     cells: Cell[];
     length: number
 }
