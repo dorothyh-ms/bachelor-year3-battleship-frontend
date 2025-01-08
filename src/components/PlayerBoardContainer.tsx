@@ -10,9 +10,10 @@ import ClearIcon from '@mui/icons-material/Clear';
 
 interface PlayerBoardContainerProps {
   board: PlayerBoard;
+  gameOver: boolean;
 }
 
-const PlayerBoardContainer = ({ board }: PlayerBoardContainerProps) => {
+const PlayerBoardContainer = ({ board, gameOver }: PlayerBoardContainerProps) => {
   const renderCell = (cell: Cell) => {
 
 
@@ -57,6 +58,7 @@ cellColor = (ship && (ship.status == "SUNK")) ? red[600] : "transparent";
             width: GRID_CELL_HEIGHT, 
             height: GRID_CELL_HEIGHT,
             color: "black",
+            bgcolor: gameOver ? grey[200] : "transparent"
         }}
       >
        
@@ -81,7 +83,7 @@ cellColor = (ship && (ship.status == "SUNK")) ? red[600] : "transparent";
 
   return (
     <Box>
-      <BoardGrid board={board} renderCell={renderCell}  />
+      <BoardGrid  board={board} renderCell={renderCell}  />
     </Box>
   );
 };

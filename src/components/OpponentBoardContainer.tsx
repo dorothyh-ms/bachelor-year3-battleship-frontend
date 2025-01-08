@@ -11,7 +11,7 @@ interface OpponentBoardContainerProps {
   gameId: string;
   board: Board;
   canTakeTurn: boolean;
-
+  gameOver: boolean;
 }
 
 const OpponentBoardContainer= (props: OpponentBoardContainerProps) => {
@@ -50,7 +50,7 @@ const OpponentBoardContainer= (props: OpponentBoardContainerProps) => {
                       minWidth: "100%",
                       height: "100%",
                     //   border: "1px solid darkgrey",
-                      backgroundColor: canTakeTurn? "transparent": grey[100],
+                      backgroundColor: props.gameOver ? grey[200] : canTakeTurn? "transparent": grey[100],
                       color: "black",
                       padding: "0px", 
                       borderRadius: "0px"

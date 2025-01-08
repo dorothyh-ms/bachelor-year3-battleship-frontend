@@ -12,7 +12,7 @@ export async function getGameById(gameId: string) : Promise<Game>   {
 
 
 export async function getAvailableGames(): Promise<Game[]> {
-    const {data: games} = await axiosApi.get<Game[]>(`/games}`);
+    const {data: games} = await axiosApi.get<Game[]>(`/games`);
 
     return games;
 
