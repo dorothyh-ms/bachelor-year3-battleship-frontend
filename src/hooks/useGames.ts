@@ -22,7 +22,7 @@ export function useGame( id: string) {
     const {isLoading, isError, data: game} = useQuery({
         queryKey: ['games',id],
         queryFn: () => getGameById(id), 
-        refetchInterval: 500
+        refetchInterval: 100
     })
 
     return {
